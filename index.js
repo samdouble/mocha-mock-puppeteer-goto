@@ -12,7 +12,7 @@ module.exports = (config, page) => {
           return;
         }
       }
-      await page.setContent('');
+      await page.goto(url);
     } else if (typeof config === 'object' && config !== null) {
       for (const [configUrl, configHtmlPage] of Object.entries(config)) {
         if (url === configUrl) {
@@ -21,7 +21,7 @@ module.exports = (config, page) => {
           return;
         }
       }
-      await page.setContent('');
+      await page.goto(url);
     } else {
       throw new Error('Error: Config must be an object or an array');
     }

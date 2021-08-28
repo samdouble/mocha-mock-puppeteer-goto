@@ -1,5 +1,5 @@
 {
-  "name": "mocha-mock-puppeteer-goto",
+  "name": "mock-puppeteer-goto",
   "version": "0.0.1",
   "description": "A Node module to help you mock a Puppeteer page's goto method",
   "main": "index.js",
@@ -8,25 +8,30 @@
   },
   "devDependencies": {
     "c8": "^7.8.0",
+    "chai": "^4.3.4",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.24.0",
-    "mocha": "^9.1.0"
+    "jest": "^27.1.0",
+    "mocha": "^9.1.0",
+    "puppeteer": "^10.2.0"
   },
   "scripts": {
     "lint": "eslint \"./**/*.js\"",
-    "test": "c8 --all mocha --check-leaks --parallel --recursive \"./{,!(node_modules)/**}/*.test.js\""
+    "test-mocha": "c8 --all mocha --check-leaks --parallel --recursive \"./{,!(node_modules)/**}/*.test.js\"",
+    "test-jest": "c8 --all jest .*.test.js",
+    "test": "npm run test-mocha && npm run test-jest"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/samdouble/mocha-mock-puppeteer-goto.git"
+    "url": "git+https://github.com/samdouble/mock-puppeteer-goto.git"
   },
   "author": "samdouble",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/samdouble/mocha-mock-puppeteer-goto/issues"
+    "url": "https://github.com/samdouble/mock-puppeteer-goto/issues"
   },
-  "homepage": "https://github.com/samdouble/mocha-mock-puppeteer-goto#readme"
+  "homepage": "https://github.com/samdouble/mock-puppeteer-goto#readme"
 }

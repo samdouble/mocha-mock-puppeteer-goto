@@ -3,7 +3,7 @@ version: 2
 jobs:
   install:
     docker:
-      - image: cimg/node:10.16.3
+      - image: cimg/node:14.17.5
     steps:
       - checkout
       - restore_cache:
@@ -20,7 +20,7 @@ jobs:
 
   lint:
     docker:
-      - image: cimg/node:10.16.3
+      - image: cimg/node:14.17.5
     steps:
       - checkout
       - restore_cache:
@@ -30,17 +30,29 @@ jobs:
           name: Linting
           command: npm run lint
 
-  test:
+  test-mocha:
     docker:
-      - image: cimg/node:10.16.3
+      - image: cimg/node:14.17.5
     steps:
       - checkout
       - restore_cache:
           keys:
             - v12-dependencies-{{ checksum "package-lock.json" }}
       - run:
-          name: Linting
+          name: Test with Mocha
           command: npm run test
+
+  test-jest:
+    docker:
+      - image: cimg/node:14.17.5
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v12-dependencies-{{ checksum "package-lock.json" }}
+      - run:
+          name: Test with Jest
+          command: npm run test-jest
 
 workflows:
   version: 2
@@ -50,6 +62,9 @@ workflows:
       - lint:
           requires:
             - install
-      - test:
+      - test-mocha:
+          requires:
+            - install
+      - test-jest:
           requires:
             - install
