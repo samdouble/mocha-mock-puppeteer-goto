@@ -1,0 +1,55 @@
+version: 2
+
+jobs:
+  install:
+    docker:
+      - image: cimg/node:10.16.3
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v12-dependencies-{{ checksum "package-lock.json" }}
+            - v12-dependencies-
+      - run:
+          name: Install Dependencies
+          command: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v12-dependencies-{{ checksum "package-lock.json" }}
+
+  lint:
+    docker:
+      - image: cimg/node:10.16.3
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v12-dependencies-{{ checksum "package-lock.json" }}
+      - run:
+          name: Linting
+          command: npm run lint
+
+  test:
+    docker:
+      - image: cimg/node:10.16.3
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v12-dependencies-{{ checksum "package-lock.json" }}
+      - run:
+          name: Linting
+          command: npm run test
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - install
+      - lint:
+          requires:
+            - install
+      - test:
+          requires:
+            - install
