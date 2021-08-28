@@ -30,6 +30,18 @@ jobs:
           name: Linting
           command: npm run lint
 
+  audit:
+    docker:
+      - image: cimg/node:14.17.5
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v12-dependencies-{{ checksum "package-lock.json" }}
+      - run:
+          name: Security audit
+          command: npm audit
+
   test-mocha:
     docker:
       - image: cimg/node:14.17.5-browsers
@@ -60,6 +72,9 @@ workflows:
     jobs:
       - install
       - lint:
+          requires:
+            - install
+      - audit:
           requires:
             - install
       - test-mocha:
