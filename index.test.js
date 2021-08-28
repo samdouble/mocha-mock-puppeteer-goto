@@ -5,7 +5,10 @@ const myPuppeteerScript = require('./tests/myPuppeteerScript');
 
 describe('mock-puppeteer-goto', () => {
   it('should work properly with a key-value config object', async () => {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      headless:false,
+      args: ["--no-sandbox"]
+    });
     const page = await browser.newPage();
     const mock = mockPuppeteerGoto({
       'https://somewebsite.com/': './tests/main.html',
