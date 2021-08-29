@@ -20,8 +20,8 @@
   },
   "scripts": {
     "lint": "eslint \"./**/*.js\"",
-    "test-mocha": "c8 --all mocha --check-leaks --parallel --recursive \"./{,!(node_modules)/**}/*.test.js\"",
-    "test-jest": "c8 --all jest .*.test.js",
+    "test-mocha": "c8 --all  --check-coverage --lines 60 --functions 100 --branches 71 mocha --check-leaks --parallel --recursive \"./{,!(node_modules)/**}/*.test.js\"",
+    "test-jest": "c8 --all  --check-coverage --lines 63 --functions 100 --branches 75 jest .*.test.js",
     "test": "npm run test-mocha && npm run test-jest"
   },
   "repository": {
