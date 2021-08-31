@@ -70,7 +70,7 @@ describe('mock-puppeteer-goto', () => {
       {
         url: './ram.html',
         htmlPath: './tests/ram.html',
-      }
+      },
     ]);
     const scriptResults = await myPuppeteerScript(page);
     await browser.close();
