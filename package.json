@@ -1,8 +1,19 @@
 {
   "name": "mock-puppeteer-goto",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A Node module to help you mock a Puppeteer page's goto method",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samdouble/mock-puppeteer-goto.git"
+  },
+  "author": "samdouble",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/samdouble/mock-puppeteer-goto/issues"
+  },
+  "homepage": "https://github.com/samdouble/mock-puppeteer-goto#readme",
+  "keywords": ["mocha", "jest", "puppeteer", "goto", "mock", "stub"],
   "dependencies": {
     "sinon": "^11.1.2"
   },
@@ -20,18 +31,8 @@
   },
   "scripts": {
     "lint": "eslint \"./**/*.js\"",
-    "test-mocha": "c8 --all  --check-coverage --lines 60 --functions 100 --branches 71 mocha --check-leaks --parallel --recursive \"./{,!(node_modules)/**}/*.test.js\"",
-    "test-jest": "c8 --all  --check-coverage --lines 63 --functions 100 --branches 75 jest .*.test.js",
+    "test-mocha": "c8 --all  --check-coverage --lines 89 --functions 100 --branches 80 mocha --check-leaks --parallel --recursive \"./{,!(node_modules)/**}/*.test.js\"",
+    "test-jest": "c8 --all  --check-coverage --lines 100 --functions 100 --branches 90 jest .*.test.js",
     "test": "npm run test-mocha && npm run test-jest"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/samdouble/mock-puppeteer-goto.git"
-  },
-  "author": "samdouble",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/samdouble/mock-puppeteer-goto/issues"
-  },
-  "homepage": "https://github.com/samdouble/mock-puppeteer-goto#readme"
+  }
 }

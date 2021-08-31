@@ -1,7 +1,7 @@
 const fs = require('fs');
 const sinon = require('sinon');
 
-module.exports = (config, page) => {
+module.exports = (page, config) => {
   const stub = sinon.stub(page, 'goto');
   stub.callsFake(async (url) => {
     if (Array.isArray(config)) {
@@ -22,8 +22,6 @@ module.exports = (config, page) => {
         }
       }
       await page.goto(url);
-    } else {
-      throw new Error('Error: Config must be an object or an array');
     }
   });
   return stub;
