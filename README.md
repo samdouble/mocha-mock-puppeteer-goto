@@ -16,7 +16,7 @@ npm install --save-dev mock-puppeteer-goto
 ### Usage
 In your test, before calling the script that you want to test, call ***mock-puppeteer-goto**.
 The function takes 2 arguments:
-- The Puppeteer Page object
+- The Puppeteer Page object your script is going to use
 - A config object with the following properties:
     - **paths**: Required. An object that tells mock-puppeteer-goto how it should mock Puppeteer's goto function. The keys are the links that are going to be visited by the Puppeteer script as found in the source code of the webpage. The values are the paths to the local HTML files with which the webpages will be stubbed.
     - **throwIfNotMapped**: Optional. A boolean that tells mock-puppeteer-goto to throw an error if your script is trying to visit a page that is not specified in your **paths** object. Defaults to false.
