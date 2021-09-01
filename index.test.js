@@ -1,17 +1,23 @@
 const puppeteer = require('puppeteer');
-const { expect } = require('chai');
+const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
 const mockPuppeteerGoto = require('.');
 const myPuppeteerScript = require('./tests/myPuppeteerScript');
+
+chai.use(chaiAsPromised);
+const { expect } = chai;
 
 describe('mock-puppeteer-goto', () => {
   it('Should work properly with a key-value config object', async () => {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     const mock = mockPuppeteerGoto(page, {
-      'https://somewebsite.com/': './tests/main.html',
-      './f150.html': './tests/f150.html',
-      './silverado.html': './tests/silverado.html',
-      './ram.html': './tests/ram.html',
+      paths: {
+        'https://somewebsite.com/': './tests/main.html',
+        'https://somewebsite.com/f150.html': './tests/f150.html',
+        'https://somewebsite.com/silverado.html': './tests/silverado.html',
+        'https://somewebsite.com/ram.html': './tests/ram.html',
+      },
     });
     const scriptResults = await myPuppeteerScript(page);
     await browser.close();
@@ -54,24 +60,26 @@ describe('mock-puppeteer-goto', () => {
   it('Should work properly with an array config object', async () => {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    const mock = mockPuppeteerGoto(page, [
-      {
-        url: 'https://somewebsite.com/',
-        htmlPath: './tests/main.html',
-      },
-      {
-        url: './f150.html',
-        htmlPath: './tests/f150.html',
-      },
-      {
-        url: './silverado.html',
-        htmlPath: './tests/silverado.html',
-      },
-      {
-        url: './ram.html',
-        htmlPath: './tests/ram.html',
-      },
-    ]);
+    const mock = mockPuppeteerGoto(page, {
+      paths: [
+        {
+          url: 'https://somewebsite.com/',
+          htmlPath: './tests/main.html',
+        },
+        {
+          url: 'https://somewebsite.com/f150.html',
+          htmlPath: './tests/f150.html',
+        },
+        {
+          url: 'https://somewebsite.com/silverado.html',
+          htmlPath: './tests/silverado.html',
+        },
+        {
+          url: 'https://somewebsite.com/ram.html',
+          htmlPath: './tests/ram.html',
+        },
+      ],
+    });
     const scriptResults = await myPuppeteerScript(page);
     await browser.close();
     mock.restore();
@@ -108,5 +116,56 @@ describe('mock-puppeteer-goto', () => {
         ],
       },
     ]);
+  });
+
+  it('Should throw if throwIfNotMapped is set to true and a path was not found', async () => {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    const mock = mockPuppeteerGoto(page, {
+      paths: [
+        {
+          url: 'https://somewebsite.com/',
+          htmlPath: './tests/main.html',
+        },
+        {
+          url: 'https://somewebsite.com/f150.html',
+          htmlPath: './tests/f150.html',
+        },
+        {
+          url: 'https://somewebsite.com/ram.html',
+          htmlPath: './tests/ram.html',
+        },
+      ],
+      throwIfNotMapped: true,
+    });
+    await expect(myPuppeteerScript(page)).to.be.rejectedWith(Error);
+    await browser.close();
+    mock.restore();
+  });
+
+  it('Should visit the original URL if throwIfNotMapped is not set (or false) and a path was not found', async () => {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    const mock = mockPuppeteerGoto(page, {
+      paths: [
+        {
+          url: 'https://somewebsite.com/',
+          htmlPath: './tests/main.html',
+        },
+        {
+          url: 'https://somewebsite.com/f150.html',
+          htmlPath: './tests/f150.html',
+        },
+        {
+          url: 'https://somewebsite.com/ram.html',
+          htmlPath: './tests/ram.html',
+        },
+      ],
+    });
+    await myPuppeteerScript(page).catch(() => {});
+    await browser.close();
+    expect(mock.getCall(2).args[0]).to.equal('https://somewebsite.com/silverado.html');
+    await expect(mock.getCall(2).returnValue).to.be.rejectedWith(); // net::ERR_NAME_NOT_RESOLVED
+    mock.restore();
   });
 });
