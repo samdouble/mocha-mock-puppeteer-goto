@@ -1,11 +1,19 @@
 {
   "name": "mock-puppeteer-goto",
-  "version": "0.1.1",
-  "description": "A Node module to help you mock a Puppeteer page's goto method",
-  "main": "index.js",
+  "version": "0.2.0",
+  "description": "A Node module to help mock a Puppeteer page's goto method",
+  "main": "index.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/samdouble/mock-puppeteer-goto.git"
+  },
+  "scripts": {
+    "audit": "npm-audit",
+    "build": "tsc",
+    "lint": "eslint--ext .ts ./",
+    "test-mocha": "c8 --all  --check-coverage --lines 96 --functions 100 --branches 85 mocha --require ts-node/register --check-leaks --recursive --timeout 5000 \"./{,!(node_modules)/**}/*.test.ts\"",
+    "test-jest": "c8 --all  --check-coverage --lines 100 --functions 100 --branches 92 jest .*.test.ts",
+    "test": "npm run test-mocha && npm run test-jest"
   },
   "author": "samdouble",
   "license": "ISC",
@@ -17,6 +25,7 @@
     "mocha",
     "jest",
     "puppeteer",
+    "playwright",
     "goto",
     "mock",
     "stub"
@@ -25,6 +34,9 @@
     "sinon": "^11.1.2"
   },
   "devDependencies": {
+    "@types/jest": "^29.5.7",
+    "@types/mocha": "^10.0.3",
+    "@types/node": "^20.8.10",
     "c8": "^7.8.0",
     "chai": "^4.3.4",
     "chai-as-promised": "^7.1.1",
@@ -35,12 +47,9 @@
     "eslint-plugin-react": "^7.24.0",
     "jest": "^27.1.0",
     "mocha": "^9.1.0",
-    "puppeteer": "^10.2.0"
-  },
-  "scripts": {
-    "lint": "eslint \"./**/*.js\"",
-    "test-mocha": "c8 --all  --check-coverage --lines 96 --functions 100 --branches 85 mocha --check-leaks --parallel --recursive --timeout 5000 \"./{,!(node_modules)/**}/*.test.js\"",
-    "test-jest": "c8 --all  --check-coverage --lines 100 --functions 100 --branches 92 jest .*.test.js",
-    "test": "npm run test-mocha && npm run test-jest"
+    "npm-audit-pipeline": "^0.6.1",
+    "puppeteer": "^10.2.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
   }
 }
