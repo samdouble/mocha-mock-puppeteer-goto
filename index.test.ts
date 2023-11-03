@@ -1,8 +1,8 @@
-const puppeteer = require('puppeteer');
-const chai = require('chai');
-const chaiAsPromised = require('chai-as-promised');
-const mockPuppeteerGoto = require('.');
-const myPuppeteerScript = require('./tests/myPuppeteerScript');
+import puppeteer from 'puppeteer';
+import chai from 'chai';
+import chaiAsPromised from 'chai-as-promised';
+import mockPuppeteerGoto from '.';
+import myPuppeteerScript from './tests/myPuppeteerScript';
 
 chai.use(chaiAsPromised);
 const { expect } = chai;
