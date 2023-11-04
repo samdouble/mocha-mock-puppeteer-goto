@@ -21,7 +21,11 @@ jobs:
 
   lint:
     docker:
+<<<<<<< HEAD
       - image: cimg/node:18.17.1
+=======
+      - image: cimg/node:18.17.1-browsers
+>>>>>>> 5455bbb63037ad9f1ce96929fe84c0ba378cfafc
     steps:
       - checkout
       - restore_cache:
@@ -84,9 +88,12 @@ workflows:
           requires:
             - install
       - test:
+<<<<<<< HEAD
           requires:
             - install
       - publish:
+=======
+>>>>>>> 5455bbb63037ad9f1ce96929fe84c0ba378cfafc
           requires:
             - lint
             - audit
