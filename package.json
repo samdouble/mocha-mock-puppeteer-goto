@@ -1,22 +1,27 @@
 {
   "name": "mock-puppeteer-goto",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "A Node module to help mock a Puppeteer page's goto method",
-  "main": "index.ts",
+  "author": "samdouble",
+  "license": "ISC",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/samdouble/mock-puppeteer-goto.git"
   },
+  "main": "dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "audit": "npm-audit",
-    "build": "tsc",
+    "build": "tsup",
     "lint": "eslint --ext .ts ./",
-    "test-jest": "c8 --all  --check-coverage --lines 100 --functions 100 --branches 92 npx jest .*.test.ts",
-    "test-mocha": "c8 --all  --check-coverage --lines 96 --functions 100 --branches 85 mocha --require ts-node/register --check-leaks --recursive --timeout 5000 \"./{,!(node_modules)/**}/*.test.ts\"",
+    "test-jest": "c8 --all  --check-coverage --lines 100 --functions 100 --branches 92 npx jest ./lib/.*.test.ts",
+    "test-mocha": "c8 --all  --check-coverage --lines 96 --functions 100 --branches 85 mocha --require ts-node/register --check-leaks --recursive --timeout 5000 ./lib/**/*.test.ts",
     "test": "npm run test-mocha && npm run test-jest"
   },
-  "author": "samdouble",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/samdouble/mock-puppeteer-goto/issues"
   },
@@ -52,6 +57,7 @@
     "puppeteer": "^21.5.0",
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.1",
+    "tsup": "^7.2.0",
     "typescript": "^5.2.2"
   }
 }
