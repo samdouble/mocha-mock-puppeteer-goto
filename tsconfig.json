@@ -11,7 +11,7 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "target": "es6",
+    "target": "ES2017",
     "types": ["mocha", "node"]
   },
   "include": [
