@@ -8,15 +8,16 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v14-dependencies-{{ checksum "package-lock.json" }}
-            - v14-dependencies-
+            - v18-dependencies-{{ checksum "package-lock.json" }}
+            - v18-dependencies-
       - run:
           name: Install Dependencies
-          command: npm install
+          command: |
+            npm install
       - save_cache:
           paths:
             - node_modules
-          key: v14-dependencies-{{ checksum "package-lock.json" }}
+          key: v18-dependencies-{{ checksum "package-lock.json" }}
 
   lint:
     docker:
@@ -25,7 +26,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v14-dependencies-{{ checksum "package-lock.json" }}
+            - v18-dependencies-{{ checksum "package-lock.json" }}
       - run:
           name: Linting
           command: npm run lint
@@ -37,34 +38,24 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v14-dependencies-{{ checksum "package-lock.json" }}
+            - v18-dependencies-{{ checksum "package-lock.json" }}
       - run:
           name: Security audit
           command: npm audit
 
-  test-mocha:
+  test:
     docker:
       - image: cimg/node:18.17.1-browsers
     steps:
       - checkout
       - restore_cache:
           keys:
-            - v14-dependencies-{{ checksum "package-lock.json" }}
+            - v18-dependencies-{{ checksum "package-lock.json" }}
       - run:
-          name: Test with Mocha
-          command: npm run test
-
-  test-jest:
-    docker:
-      - image: cimg/node:18.17.1-browsers
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v14-dependencies-{{ checksum "package-lock.json" }}
-      - run:
-          name: Test with Jest
-          command: npm run test-jest
+          name: Test
+          command: |
+            node node_modules/puppeteer/install.mjs
+            npm run test
 
 workflows:
   version: 2
@@ -77,9 +68,6 @@ workflows:
       - audit:
           requires:
             - install
-      - test-mocha:
-          requires:
-            - install
-      - test-jest:
+      - test:
           requires:
             - install

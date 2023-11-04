@@ -9,7 +9,13 @@ const { expect } = chai;
 
 describe('mock-puppeteer-goto', () => {
   it('Should work properly with a key-value config object', async () => {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      args: [
+        '--disable-setuid-sandbox',
+        '--no-sandbox',
+      ],
+      headless: 'new',
+    });
     const page = await browser.newPage();
     const mock = mockPuppeteerGoto(page, {
       paths: {
@@ -58,7 +64,7 @@ describe('mock-puppeteer-goto', () => {
   });
 
   it('Should work properly with an array config object', async () => {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({ headless: 'new' });
     const page = await browser.newPage();
     const mock = mockPuppeteerGoto(page, {
       paths: [
@@ -119,7 +125,7 @@ describe('mock-puppeteer-goto', () => {
   });
 
   it('Should throw if throwIfNotMapped is set to true and a path was not found', async () => {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({ headless: 'new' });
     const page = await browser.newPage();
     const mock = mockPuppeteerGoto(page, {
       paths: [
@@ -144,7 +150,7 @@ describe('mock-puppeteer-goto', () => {
   });
 
   it('Should visit the original URL if throwIfNotMapped is not set (or false) and a path was not found', async () => {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({ headless: 'new' });
     const page = await browser.newPage();
     const mock = mockPuppeteerGoto(page, {
       paths: [
