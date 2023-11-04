@@ -2,7 +2,7 @@ import puppeteer from 'puppeteer';
 import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import mockPuppeteerGoto from '.';
-import myPuppeteerScript from './tests/myPuppeteerScript';
+import myPuppeteerScript from '../tests/myPuppeteerScript';
 
 chai.use(chaiAsPromised);
 const { expect } = chai;
