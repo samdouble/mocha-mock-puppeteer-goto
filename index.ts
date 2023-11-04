@@ -1,11 +1,25 @@
-const fs = require('fs');
-const sinon = require('sinon');
+import fs from 'fs';
+import sinon from 'sinon';
 
-module.exports = (page, config) => {
+export interface ConfigPath {
+  htmlPath: string;
+  url: string;
+}
+
+type ConfigPathsArray = ConfigPath[];
+type ConfigPathsObject = { [key: string]: string; };
+type ConfigPaths = ConfigPathsArray | ConfigPathsObject;
+
+export interface Config {
+  paths: ConfigPaths;
+  throwIfNotMapped?: boolean;
+}
+
+export default function (page, config: Config) {
   const { paths, throwIfNotMapped } = config;
   const originalGoto = page.goto.bind(page);
   const stub = sinon.stub(page, 'goto');
-  stub.callsFake(async (url) => {
+  stub.callsFake(async url => {
     if (Array.isArray(paths)) {
       for (const configPage of paths) {
         if (url === configPage.url) {
@@ -29,4 +43,4 @@ module.exports = (page, config) => {
     await originalGoto(url);
   });
   return stub;
-};
+}
