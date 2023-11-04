@@ -19,7 +19,7 @@
     "build": "tsup",
     "lint": "eslint --ext .ts ./",
     "test-jest": "c8 --all  --check-coverage --lines 100 --functions 100 --branches 92 npx jest lib/.*.test.ts",
-    "test-mocha": "c8 --all  --check-coverage --lines 96 --functions 100 --branches 85 mocha --require ts-node/register --check-leaks --recursive --timeout 5000 lib/*.test.ts",
+    "test-mocha": "c8 --all  --check-coverage --lines 96 --functions 100 --branches 85 mocha --require ts-node/register --check-leaks --recursive --timeout 5000 lib/**/*.test.ts",
     "test": "npm run test-mocha && npm run test-jest"
   },
   "bugs": {
