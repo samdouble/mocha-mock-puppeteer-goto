@@ -28,8 +28,10 @@ jobs:
           keys:
             - v18-dependencies-{{ checksum "package-lock.json" }}
       - run:
-          name: Linting
-          command: npm run lint
+          name: Lint
+          command: |
+            npm install
+            npm run lint
 
   audit:
     docker:
@@ -54,6 +56,7 @@ jobs:
       - run:
           name: Test
           command: |
+            npm install
             node node_modules/puppeteer/install.mjs
             npm run test
 

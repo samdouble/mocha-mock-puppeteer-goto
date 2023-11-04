@@ -2,11 +2,12 @@
   "compilerOptions": {
     "allowJs": false,
     "allowSyntheticDefaultImports": true,
+    "declaration": true,
     "esModuleInterop": true,
     "lib": ["dom", "dom.iterable", "esnext"],
     "module": "commonjs",
     "noImplicitAny": false,
-    "outDir": "build",
+    "outDir": "dist",
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
@@ -15,10 +16,10 @@
     "types": ["mocha", "node"]
   },
   "include": [
-    "."
+    "./lib"
   ],
   "exclude": [
-    "./node_modules/*",
-    "./build/*",
+    "./dist",
+    "./node_modules",
   ]
 }
