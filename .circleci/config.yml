@@ -14,7 +14,6 @@ jobs:
           name: Install Dependencies
           command: |
             npm install
-            node node_modules/puppeteer/install.mjs
       - save_cache:
           paths:
             - node_modules
@@ -44,7 +43,7 @@ jobs:
           name: Security audit
           command: npm audit
 
-  test-mocha:
+  test:
     docker:
       - image: cimg/node:18.17.1-browsers
     steps:
@@ -53,20 +52,10 @@ jobs:
           keys:
             - v14-dependencies-{{ checksum "package-lock.json" }}
       - run:
-          name: Test with Mocha
-          command: npm run test
-
-  test-jest:
-    docker:
-      - image: cimg/node:18.17.1-browsers
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v14-dependencies-{{ checksum "package-lock.json" }}
-      - run:
-          name: Test with Jest
-          command: npm run test-jest
+          name: Test
+          command: |
+            npm install
+            npm run test
 
 workflows:
   version: 2
