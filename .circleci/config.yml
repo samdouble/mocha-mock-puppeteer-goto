@@ -68,9 +68,6 @@ workflows:
       - audit:
           requires:
             - install
-      - test-mocha:
-          requires:
-            - install
-      - test-jest:
+      - test:
           requires:
             - install
