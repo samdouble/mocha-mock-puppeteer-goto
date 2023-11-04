@@ -12,7 +12,9 @@ jobs:
             - v14-dependencies-
       - run:
           name: Install Dependencies
-          command: npm install
+          command: |
+            npm install
+            node node_modules/puppeteer/install.js
       - save_cache:
           paths:
             - node_modules
