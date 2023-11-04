@@ -8,8 +8,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v14-dependencies-{{ checksum "package-lock.json" }}
-            - v14-dependencies-
+            - v18-dependencies-{{ checksum "package-lock.json" }}
+            - v18-dependencies-
       - run:
           name: Install Dependencies
           command: |
@@ -17,7 +17,7 @@ jobs:
       - save_cache:
           paths:
             - node_modules
-          key: v14-dependencies-{{ checksum "package-lock.json" }}
+          key: v18-dependencies-{{ checksum "package-lock.json" }}
 
   lint:
     docker:
@@ -26,7 +26,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v14-dependencies-{{ checksum "package-lock.json" }}
+            - v18-dependencies-{{ checksum "package-lock.json" }}
       - run:
           name: Linting
           command: npm run lint
@@ -38,7 +38,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v14-dependencies-{{ checksum "package-lock.json" }}
+            - v18-dependencies-{{ checksum "package-lock.json" }}
       - run:
           name: Security audit
           command: npm audit
@@ -50,11 +50,12 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v14-dependencies-{{ checksum "package-lock.json" }}
+            - v18-dependencies-{{ checksum "package-lock.json" }}
       - run:
           name: Test
           command: |
             npm install
+            apt-get install libgbm1 libasound2
             npm run test
 
 workflows:
