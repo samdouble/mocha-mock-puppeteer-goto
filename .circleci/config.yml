@@ -3,7 +3,7 @@ version: 2
 jobs:
   install:
     docker:
-      - image: cimg/node:14.17.5-browsers
+      - image: cimg/node:18.17.1-browsers
     steps:
       - checkout
       - restore_cache:
@@ -20,7 +20,7 @@ jobs:
 
   lint:
     docker:
-      - image: cimg/node:14.17.5-browsers
+      - image: cimg/node:18.17.1-browsers
     steps:
       - checkout
       - restore_cache:
@@ -32,7 +32,7 @@ jobs:
 
   audit:
     docker:
-      - image: cimg/node:14.17.5
+      - image: cimg/node:18.17.1
     steps:
       - checkout
       - restore_cache:
@@ -44,7 +44,7 @@ jobs:
 
   test-mocha:
     docker:
-      - image: cimg/node:14.17.5-browsers
+      - image: cimg/node:18.17.1-browsers
     steps:
       - checkout
       - restore_cache:
@@ -56,7 +56,7 @@ jobs:
 
   test-jest:
     docker:
-      - image: cimg/node:14.17.5-browsers
+      - image: cimg/node:18.17.1-browsers
     steps:
       - checkout
       - restore_cache:
