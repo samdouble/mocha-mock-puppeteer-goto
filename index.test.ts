@@ -10,7 +10,10 @@ const { expect } = chai;
 describe('mock-puppeteer-goto', () => {
   it('Should work properly with a key-value config object', async () => {
     const browser = await puppeteer.launch({
-      executablePath: `/usr/bin/chromium-browser`,
+      args: [
+        '--disable-setuid-sandbox',
+        '--no-sandbox',
+      ],
       headless: 'new',
     });
     const page = await browser.newPage();
