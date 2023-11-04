@@ -26,4 +26,4 @@ export default async function (page) {
     trucks.push(truck);
   }
   return trucks;
-};
+}

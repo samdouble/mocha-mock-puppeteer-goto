@@ -4,7 +4,7 @@ import sinon from 'sinon';
 export interface ConfigPath {
   htmlPath: string;
   url: string;
-};
+}
 
 type ConfigPathsArray = ConfigPath[];
 type ConfigPathsObject = { [key: string]: string; };
@@ -13,7 +13,7 @@ type ConfigPaths = ConfigPathsArray | ConfigPathsObject;
 export interface Config {
   paths: ConfigPaths;
   throwIfNotMapped?: boolean;
-};
+}
 
 export default function (page, config: Config) {
   const { paths, throwIfNotMapped } = config;
@@ -43,4 +43,4 @@ export default function (page, config: Config) {
     await originalGoto(url);
   });
   return stub;
-};
+}
