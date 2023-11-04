@@ -55,7 +55,6 @@ jobs:
           name: Test
           command: |
             npm install
-            apt-get install libgbm1 libasound2
             npm run test
 
 workflows:
