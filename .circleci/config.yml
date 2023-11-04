@@ -8,24 +8,25 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v14-dependencies-{{ checksum "package-lock.json" }}
-            - v14-dependencies-
+            - v18-dependencies-{{ checksum "package-lock.json" }}
+            - v18-dependencies-
       - run:
           name: Install Dependencies
-          command: npm install
+          command: |
+            npm install
       - save_cache:
           paths:
             - node_modules
-          key: v14-dependencies-{{ checksum "package-lock.json" }}
+          key: v18-dependencies-{{ checksum "package-lock.json" }}
 
   lint:
     docker:
-      - image: cimg/node:18.17.1-browsers
+      - image: cimg/node:18.17.1
     steps:
       - checkout
       - restore_cache:
           keys:
-            - v14-dependencies-{{ checksum "package-lock.json" }}
+            - v18-dependencies-{{ checksum "package-lock.json" }}
       - run:
           name: Linting
           command: npm run lint
@@ -37,34 +38,39 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v14-dependencies-{{ checksum "package-lock.json" }}
+            - v18-dependencies-{{ checksum "package-lock.json" }}
       - run:
           name: Security audit
           command: npm audit
 
-  test-mocha:
+  test:
     docker:
       - image: cimg/node:18.17.1-browsers
     steps:
       - checkout
       - restore_cache:
           keys:
-            - v14-dependencies-{{ checksum "package-lock.json" }}
+            - v18-dependencies-{{ checksum "package-lock.json" }}
       - run:
-          name: Test with Mocha
-          command: npm run test
+          name: Test
+          command: |
+            node node_modules/puppeteer/install.mjs
+            npm run test
 
-  test-jest:
+  publish:
     docker:
-      - image: cimg/node:18.17.1-browsers
+      - image: cimg/node:18.17.1
     steps:
       - checkout
       - restore_cache:
           keys:
-            - v14-dependencies-{{ checksum "package-lock.json" }}
+            - v18-dependencies-{{ checksum "package-lock.json" }}
       - run:
-          name: Test with Jest
-          command: npm run test-jest
+          name: Build
+          command: |
+            npm run build
+            npm set //registry.npmjs.org/:_authToken $NPM_API_TOKEN
+            npm publish --access=public
 
 workflows:
   version: 2
@@ -77,9 +83,11 @@ workflows:
       - audit:
           requires:
             - install
-      - test-mocha:
+      - test:
           requires:
             - install
-      - test-jest:
+      - publish:
           requires:
-            - install
+            - lint
+            - audit
+            - test
