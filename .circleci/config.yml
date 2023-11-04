@@ -54,7 +54,7 @@ jobs:
       - run:
           name: Test
           command: |
-            npm install
+            apt-get install chromium-browser
             npm run test
 
 workflows:
