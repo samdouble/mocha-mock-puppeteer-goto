@@ -1,7 +1,5 @@
 # mock-puppeteer-goto
 
-[![samdouble](https://circleci.com/gh/samdouble/mock-puppeteer-goto.svg?style=svg)](https://circleci.com/gh/samdouble/mock-puppeteer-goto)
-
 A Node module to help you mock a Puppeteer page's goto method.
 
 ### Use Case
@@ -18,12 +16,13 @@ In your test, before calling the script that you want to test, call ***mock-pupp
 The function takes 2 arguments:
 - The Puppeteer Page object your script is going to use
 - A config object with the following properties:
+
     - **paths**: Required. An object that tells mock-puppeteer-goto how it should mock Puppeteer's goto function. The keys are the links that are going to be visited by the Puppeteer script as found in the source code of the webpage. The values are the paths to the local HTML files with which the webpages will be stubbed.
     - **throwIfNotMapped**: Optional. A boolean that tells mock-puppeteer-goto to throw an error if your script is trying to visit a page that is not specified in your **paths** object. Defaults to false.
 
 After your test, restore the normal behavior of Puppeteer's goto function to avoid any weird results in some of your other tests.
 
-Here is a small example on how to use the module in your test files.
+Here is a small example on how to use the module in your test files with Puppeteer:
 
 ```javascript
 const mockPuppeteerGoto = require('mock-puppeteer-goto');
@@ -57,3 +56,5 @@ describe('My Puppeteer script', () => {
   });
 });
 ```
+
+It works with Playwright too.
