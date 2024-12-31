@@ -15,7 +15,7 @@
     "dist"
   ],
   "scripts": {
-    "audit": "npm-audit",
+    "audit": "npm-audit --moderate=2 --high=3",
     "build": "tsup",
     "lint": "eslint --ext .ts ./",
     "test-jest": "nyc --check-coverage --lines 100 --functions 100 --branches 92 npx jest ./lib/.*.test.ts",
